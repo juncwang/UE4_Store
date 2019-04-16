@@ -546,6 +546,7 @@ void ACameraPawn::SpawnNewMode(FString url, FString fileName, int32 gid)
 		{
 			baseMode->initStaticMesh(mesh, gid);
 			baseMode->BaseModeState = EBaseModeState::BaseModeMove;
+			baseMode->isNew = true;
 			baseMode->setRender(true);
 
 			PawnBaseMode = baseMode;
@@ -733,6 +734,12 @@ void ACameraPawn::MouseRightDown()
 				fMouseRightTime = 0.0;
 			}
 		}
+
+		if (PawnBaseMode != nullptr && PawnBaseMode->BaseModeState == EBaseModeState::BaseModeMove)
+		{
+			rightMouseTime = GetWorld()->GetRealTimeSeconds();
+			OutPrint(FString::SanitizeFloat(rightMouseTime));
+		}
 	}
 	
 }
@@ -784,6 +791,17 @@ void ACameraPawn::MouseRightUp()
 				}
 				ControlTargetRotation.Roll = GetControlRotation().Roll;
 			}
+		}
+
+	
+
+		if (PawnBaseMode != nullptr && PawnBaseMode->BaseModeState == EBaseModeState::BaseModeMove && (GetWorld()->GetRealTimeSeconds() - rightMouseTime) < 0.15f)
+		{
+			OutPrint(FString::SanitizeFloat(GetWorld()->GetRealTimeSeconds()));
+			PawnBaseMode->BaseModeState = EBaseModeState::BaseModeStatic;
+			PawnBaseMode->setRender(false);
+			PawnBaseMode->cancelTransfrom();
+			PawnBaseMode = nullptr;
 		}
 	}
 	
@@ -844,6 +862,8 @@ void ACameraPawn::MouseLeftDown()
 		{
 			bMouseSelectWorF = false;
 		}
+
+		
 	}
 	
 }
@@ -921,7 +941,7 @@ void ACameraPawn::OutPrint(FString myString)
 	if (GEngine)
 	{
 		myString = "ACameraPawn::" + myString;
-		GEngine->AddOnScreenDebugMessage(-1, 99.0f, FColor::Green, myString);
+		GEngine->AddOnScreenDebugMessage(-1, 99.0f, FColor::Black, myString);
 	}
 }
 

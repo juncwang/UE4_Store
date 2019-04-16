@@ -76,7 +76,7 @@ void UCUI_select::DisplayConfiguration()
 	/* 调用网络接口获取10个以内的户型                                       */
 	/* 获取数据总长/每页数量, 得到 pageMax									*/
 	/* 是否显示上一页下一页按钮												*/
-	/* 此方法加入网络功能后, 改动较大										*/			
+	/* 此方法加入网络功能后, 改动较大										*/
 	/************************************************************************/
 	if (eHouse == EHouseType::House) {
 		loadHOUSETYPELISTSchemeDetail();

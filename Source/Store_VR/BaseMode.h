@@ -24,6 +24,11 @@ public:
 	FCollisionQueryParams params;
 	class ACameraPlayerController* CameraPlayerController;
 
+	// 取消移动操作后 模型位置还原
+	FTransform baseTransfrom;
+	bool isNew;
+	void cancelTransfrom();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BaseActor")
 		int32 gid;
 

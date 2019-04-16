@@ -4,6 +4,18 @@
 #include "CameraPlayerController.h"
 #include "CameraPawn.h"
 
+void ABaseMode::cancelTransfrom()
+{
+	if (isNew)
+	{
+		destroySelf();
+	}
+	else
+	{
+		SetActorTransform(baseTransfrom);
+	}
+}
+
 // Sets default values
 ABaseMode::ABaseMode()
 {
@@ -72,6 +84,8 @@ void ABaseMode::actorOnClicked(AActor* TouchedActor, FKey ButtonPressed)
 		if (CameraPawn->PawnBaseMode == nullptr)
 		{
 			BaseModeState = EBaseModeState::BaseModeSelect;
+			baseTransfrom = GetActorTransform();
+			isNew = false;
 			bMouseSelect = true;
 			CameraPawn->setBaseMode(this);
 			setRender(true);

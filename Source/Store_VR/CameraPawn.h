@@ -23,6 +23,9 @@ class STORE_VR_API ACameraPawn : public APawn
 
 public:
 
+	// 右键按下松开时间
+	float rightMouseTime;
+
 	// 禁用鼠标操作场景
 	bool bMouseController;
 
